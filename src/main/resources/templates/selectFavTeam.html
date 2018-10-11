@@ -1,11 +1,29 @@
 <html lang="en">
+        <html xmlns:th="http://www.thymeleaf.org"></html>
 <head>
+        
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-        <style type="text/css">
-        #logout{margin-top:5px;}
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>    
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" />
+        
+        
+        
+        <style type="text/css">        
+            #logout{margin-top:5px;} 
+            #profile,#logout,#feed{display: none;}       
         </style>
+        <script>
+            $(".js-example-basic-multiple").select2({
+                placeholder: 'Select an option'
+            });
+            
+        </script>
 </head>
 
 <body>
@@ -36,24 +54,62 @@
                      if(response.status === 'connected'){                 
                          console.log("logged in and authenticated");
                          setElements(true);
+                         console.log(response);
+                         testAPI();
                      } else {                 
                          console.log('Not authenticated');
                          setElements(false);  
                      }
                  }  
-        
-                 function checkLoginState() {
-                    FB.getLoginStatus(function(response) {
-                        statusChangeCallback(response);
+      
+
+                function testAPI(){
+                    FB.api('/me?fields=name,email', function(response){
+                    if(response && !response.error){
+                        console.log(response);
+                        buildProfile(response);
+                    }
+                    FB.api('/me/feed', function(response){
+                        if(response && !response.error){
+                        buildFeed(response);
+                        }
                     });
-                } 
+                    })
+                }
+
+                function buildProfile(user){
+                    let profile = `
+                        <span>${user.name}</span>
+                    `;
+                    document.getElementById('profile').innerHTML = profile;
+                }
+
+                function buildFeed(feed){
+                    let output = '<h3>Latest Posts</h3>';
+                    for(let i in feed.data){
+                    if(feed.data[i].message){
+                        output += `
+                        <div class="well">
+                            ${feed.data[i].message} <span>${feed.data[i].created_time}</span>
+                        </div>
+                        `;
+                    }
+                }
+                document.getElementById('feed').innerHTML = output;
+            }
+
+
                 
                  function setElements(isLoggedIn){
                      if(isLoggedIn){
                         document.getElementById('logout').style.display='block';
+                        // document.getElementById('heading').style.display='block';
+                        document.getElementById('profile').style.display='block';
                      } else {
                         document.getElementById('logout').style.display='none'; 
-                        window.location.href="/";                              
+                        window.location.href="/";     
+                        // document.getElementById('heading').style.display='block';
+                        document.getElementById('profile').style.display='block';                           
                     }
                  }
                  
@@ -65,55 +121,133 @@
 
               </script>
 
-    <!--Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">
-            <img src="/src/main/resources/templates/images/logo3.jpg" height="20" alt="SportsWatch">
-        </a>
-        <a class="navbar-brand" href="#">SportsWatch</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <!--Navbar-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-info" id="topbar">
+            <a class="navbar-brand" href="/">
+                
+                <img src="https://github.com/EricYang3721/SportsWatch/blob/master/src/main/resources/templates/images/logo3.jpg" alt="SportsWatch">
+              </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+        
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/" id="nav_home">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="nav_favTeam">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                    <!-- <button class="btn btn-primary" style="margin-left:40px">LOG OUT</button> -->
+                </ul>  
+                <div class="">
+                    <a id="logout" href="#" onclick="logout()" class="btn btn-primay" style="margin-top: 0px">Logout</a>                      
+                </div>
+        </nav> <!--Navbar end-->
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-            </ul>
+            <!--Select form-->
+            <!-- <div class="d-flex justify-content-center">
+                    <form th:object="${user}" th:action="@{/save}" method="POST" action="/index">
+                            <label for="teams">
+                                    Please choose your favourite teams:
+                            </label>
+                                <select id="teams" th:field="*{teams}" class="form-control select2" multiple="multiple" style="width: 100%;">
+                                    <option th:each="team : ${allTeams}" 
+                                        th:value="${{team}}" th:text="${team.name}">Washington Wizards (WW)</option>
+                                    <option th:each="team : ${allTeams}" 
+                                        th:value="${{team}}" th:text="${team.name}"> Miami Heat (MH)</option>
+                                    <option th:each="team : ${allTeams}" 
+                                        th:value="${{team}}" th:text="${team.name}"> Los Angeles Clippers (LAC)]</option> 
+                                </select>
+                                <p><input type="submit" value="Submit" /> 
+                            
+                    </form>
+            
+            </div>  -->
+            <!-- Select form end -->
 
-            </div>
-        <div class="input-group justify-content-end">
-  
-                    <select class="favourite-select" id="inputGroupSelect01">
-                        <option>select a team</option>
-                        <option value="1">Washington Wizards</option>
-                        <option value="2">Miami Heat</option>
-                        <option value="3"> Los Angeles Clippers</option>
-                    </select>
+            <!--test select form-->
+            <!-- <h1>Form</h1>
+            <form action="#" th:action="@{/greeting}" th:object="${greeting}" method="post">
+                <p>Id: <input type="text" th:field="*{id}" /></p>
+                <p>Message: <input type="text" th:field="*{content}" /></p>
+                <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+            </form> -->
+            <!-- <div class="container">
+                <div id="profile"></div>     
+            </div> -->
+
+            <div class="d-flex justify-content-center">
+                <form action="#" th:object="${selectFavTeam}" th:action="@{/selectFavTeam}" method="post">
+                        <label for="favteams">
+                                <span id="profile"></span>Please choose your favourite teams:
+                        </label>
+                            <select th:filed="${team}" class="form-control select2" multiple="multiple" id="displayInTable" data-placeholder="select teams" style="width: 100%;">
+                                <option type="text"  value="WW">Washington Wizards (WW)</option>
+                                <option> Miami Heat (MH)</option>
+                                <option > Los Angeles Clippers (LAC)]</option> 
+
+                            </select>
+                            <p><input type="submit" value="Submit"/>                             
+                </form>
+        
+        </div>      
+
+        
+
+                       <!-- Good Select form -->
+            <!-- <div class="d-flex justify-content-center">
+                    <form method="POST" action="/index">
+                            <label for="teams">
+                                    Please choose your favourite teams:
+                            </label>
+                                <select class="form-control select2" multiple="multiple" id="displayInTable" data-placeholder="select teams" style="width: 100%;">
+                                    <option>Washington Wizards (WW)</option>
+                                    <option> Miami Heat (MH)</option>
+                                    <option > Los Angeles Clippers (LAC)]</option> 
+                                </select>
+                                <p><input type="submit" value="Submit"/>                             
+                    </form>
+            
+            </div> -->
+            
+
+            <!-- <h1>Form</h1>
+            <form action="#" th:action="@{/greeting}" th:object="${greeting}" method="post">
+                <p>Id: <input type="text" th:field="*{id}" /></p>
+                <p>Message: <input type="text" th:field="*{content}" /></p>
+                <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+            </form> -->
+
+
+
+        <div class="container">
+                
+                <div id="feed"></div>
         </div>
-        <a id="logout" href="#" onclick="logout()" class="btn btn-primay" style="margin-top: 0px">Logout</a>
-            <!-- <button class="btn btn-primary" style="margin-left:40px" id="logout">LOG OUT</button> -->
-</nav> <!--Navbar end-->
 
-
-
-
-
+            
     <script>
-        $(document).ready(function() {
-            $("#inputGroupSelect01").select2({
-            placeholder: "Select a team"        
-            });
+        $('#displayInTable').select2({
+            allowClear: true
+        });
+        $('#displayInTable').change(function() {
+            table = $("#analysisTable").DataTable();
         });
 
+        $('#displayInTable').on('select2:select', function(e) {
+            var selected_value = Number(e.params.data.id);
+            table.column(selected_value).visible(true);
+        });
 
+        $('#displayInTable').on("select2:unselect", function(e) {
+            var unselected_value = Number(e.params.data.id);
+            table.column(unselected_value).visible(false);
+        });
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

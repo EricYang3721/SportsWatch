@@ -1,5 +1,6 @@
 package se.sportswatch;
 
+import java.util.ArrayList;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +14,11 @@ public class User {
 
     private String name;
 
-    private String email;
+	private String email;
+	
+	private ArrayList<Team> favteams;
+
+
 
 	public Integer getId() {
 		return id;
@@ -38,7 +43,16 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-    
+
+	public ArrayList<Team> getFavTeams() {
+		return favteams;
+	}
+
+	public void setFavTeams(ArrayList<Team> favteams) {
+		this.favteams = favteams;
+	}
+
+
     
 }
 

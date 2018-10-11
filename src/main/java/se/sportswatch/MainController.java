@@ -2,6 +2,9 @@ package se.sportswatch;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 // import org.springframework.social.facebook.api.Facebook;
 // import org.springframework.social.facebook.api.PagedList;
 // import org.springframework.social.facebook.api.Post;
@@ -15,15 +18,34 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MainController {
-    @GetMapping("/")
+    @GetMapping("/index")
     public String renderIndex(){
         return "index";
     }
+  
 
-    @GetMapping("/selectFavTeam")
-    public String selectFavTeam(){
+    // @GetMapping("/selectFavTeam")
+    // public String selectFavTeam(){
+    //     return "selectFavTeam";
+    //  }
+    
+     @GetMapping("/selectFavTeam")
+     public String teamForm(Model model){
+        model.addAttribute("selectFavTeam", new User());
         return "selectFavTeam";
      }
+
+     @PostMapping("/selectFavTeam") 
+    public String teamSubmit(@ModelAttribute User selectFavTeam){
+        return "test";
+     }
+
+    //  @PostMapping("/")
+    //  public String greetingSubmit(@ModelAttribute team team){
+    //      return "result";
+    //  }
+
+
     // @Autowired
     // private Facebook facebook;
     // private ConnectionRepository connectionRepository;
