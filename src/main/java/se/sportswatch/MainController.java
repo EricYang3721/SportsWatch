@@ -44,14 +44,17 @@ public class MainController {
         // }
         // model.addAttribute("selected", selected);
         User usr = userRepository.findByName("Jack");
-        int[] teams = usr.getFavteams();
-        Team[] selTeams = new Team[teams.length];
-
-        for(int i=0; i<teams.length; i++){
-            selTeams[i] = teamRepository.findById(teams[i]);
+        if(usr!=null){
+            int[] teams = usr.getFavteams();
+            Team[] selTeams = new Team[teams.length];
+    
+            for(int i=0; i<teams.length; i++){
+                selTeams[i] = teamRepository.findById(teams[i]);
+            }
+            model.addAttribute("user1", usr);
+            model.addAttribute("teams", selTeams);
         }
-        model.addAttribute("user1", usr);
-        model.addAttribute("teams", selTeams);
+
 
         return "index";
     }

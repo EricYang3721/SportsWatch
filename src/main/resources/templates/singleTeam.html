@@ -141,9 +141,6 @@
       </script>
 
 
-
-
-
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg navbar-light bg-info" id="topbar">
         <a class="navbar-brand" href="/">
@@ -182,123 +179,25 @@
                 </div>
     </nav> <!--Navbar end-->
 
+
     <div class="container">
-        <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
-          <div class="col-md-6 px-0">
-            <h1 class="display-4 font-italic">Title of a longer featured blog post</h1>
-            <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.</p>
-            <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Continue reading...</a></p>
-          </div>
-        </div>
-      </div>
-
-      <div class="container">
-            <table class="table" >
-                    <thead>
-                        <!-- <tr>
-                            <td>User Name:</td>
-                            <td th:text="${user1.getName()}"></td>
-                        </tr> -->
-                    <tr>
-                        <th scope="col">Team Name</th>
-                        <th scope="col">Abbreviation</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="team : ${teams}">
-                        <td th:text="${team.getName()}">Team Name</td>
-                        <td th:text="${team.getAbbreviation()}">Abbreviation</td>
-                    </tr>
-                    </tbody>
-                </table>
-      </div>
-
-
-      <!-- <div class="container justify-content-center">
-        <table class="table table-striped table-light justify-content-center">
-            <h1>Sports Watch</h1>
-            <thead>
-            <tr>
-                <td colspan="2">Selected Teams</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="justify-content-center">
-                <td th:each="t: ${selected}"th:text="${t}" class="justify-content-center"> </td>
-            </tr>
-            </tbody>
-        </table>
-
-      </div> -->
-
-    <!-- <div class="container">
-            <h3 id="heading">Log in to view your profile</h3>
-            <div id="profile"></div>
-        </div> -->
-
-    <!--log in-->
-    <!-- <div class="container">
-            <div class="login-form">
-                    <form action="/examples/actions/confirmation.php" method="post">
-                        <h2 class="text-center">Log in</h2>       
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Username" required="required">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Password" required="required">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block">Log in</button>
-                        </div>
-                        <div class="clearfix">
-                            <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
-                            <a href="#" class="justify-content-end">Forgot Password?</a>
-                        </div>        
-                    </form>
-                          <!--FB login buttons etc-->
-    
-
-
-
-        <div class="container">
-            <h3 id="heading">Log in to view your profile</h3>
-            <div id="profile"></div>
-            <div id="feed"></div>
-        </div>
-
-                        
-
-
-
-
-                    </div>
-
-                </div>
-
+        
     </div>
 
 
-        
-  
 
-   
-    <!-- <img th:src="@{/src/main/resources/static/imgs/logo3.jpg}" alt="memorynotfound logo"/> -->
-    <!-- <img src="/src/main/resources/static/imgs/logo3.jpg" alt="my imaegs"> -->
-    <!--create a date-->
-    <!-- <p th:text="${#dates.createNow()}"></p>   -->
-    
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-    <script>
-        // $('#btn1').click(function(){
-        //     $(this).hide();
-        // })
-        $('#nav_favTeam').click(function(){
-            altert("team clicked");
-        })
-    </script>
+<script>
+    // $('#btn1').click(function(){
+    //     $(this).hide();
+    // })
+    $('#nav_favTeam').click(function(){
+        altert("team clicked");
+    })
+</script>
 
 </body>
 </html>
